@@ -1,0 +1,26 @@
+﻿@page "/gridtoolbarbuttonclick"
+
+<h1>GridToolbarButtonClick</h1>
+
+<p>When clicking the button on the grid toolbar, it stays pressed.</p>
+<p>Current correlation id: @CorrelationAccessor.Current?.GetCorrelationId()</p>
+
+<SfGrid DataSource="@Forecasts" AllowPaging="true" TValue="WeatherForecast" Width="100%">
+    <GridPageSettings PageSize="10"></GridPageSettings>
+    <GridTemplates>
+        <ToolbarTemplate>
+            <SfToolbar>
+                <ToolbarItems>
+                    <ToolbarItem Text="DoNothing" Type="ItemType.Button" OnClick="@DoNothing"></ToolbarItem>
+                </ToolbarItems>
+            </SfToolbar>
+        </ToolbarTemplate>
+    </GridTemplates>
+    <GridColumns>
+        <GridColumn Field=@nameof(WeatherForecast.Id) HeaderText="Id" IsPrimaryKey="true"></GridColumn>
+        <GridColumn Field=@nameof(WeatherForecast.TemperatureC) HeaderText="TempC"></GridColumn>
+        <GridColumn Field=@nameof(WeatherForecast.TemperatureF) HeaderText="TempF"></GridColumn>
+        <GridColumn Field=@nameof(WeatherForecast.Date) HeaderText="Date"></GridColumn>
+        <GridColumn Field=@nameof(WeatherForecast.Summary) HeaderText="Summary"></GridColumn>
+    </GridColumns>
+</SfGrid>
