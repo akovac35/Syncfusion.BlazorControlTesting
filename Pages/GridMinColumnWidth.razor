@@ -1,0 +1,17 @@
+﻿@page "/gridmincolumnwidth"
+
+<h1>GridMinColumnWidth</h1>
+
+<p>Grid column Summary should respect the configured MinWidth="@MinWidth". Try resizing the screen using browser developer tools (F12).</p>
+<p>Current correlation id: @CorrelationAccessor.Current?.GetCorrelationId()</p>
+
+<SfGrid DataSource="@Forecasts" AllowPaging="true" TValue="WeatherForecast" Width="100%" AllowResizing="false">
+    <GridPageSettings PageSize="10"></GridPageSettings>
+    <GridColumns>
+        <GridColumn Field=@nameof(WeatherForecast.Id) HeaderText="Id" IsPrimaryKey="true" Visible="false"></GridColumn>
+        <GridColumn Field=@nameof(WeatherForecast.Summary) HeaderText="Summary" MinWidth="@MinWidth"></GridColumn>
+        <GridColumn Field=@nameof(WeatherForecast.TemperatureC) HeaderText="TempC"></GridColumn>
+        <GridColumn Field=@nameof(WeatherForecast.TemperatureF) HeaderText="TempF"></GridColumn>
+        <GridColumn Field=@nameof(WeatherForecast.Date) HeaderText="Date"></GridColumn>
+    </GridColumns>
+</SfGrid>
