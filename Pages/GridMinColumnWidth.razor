@@ -6,7 +6,7 @@
 <p>Current correlation id: @CorrelationAccessor.Current?.GetCorrelationId()</p>
 
 <SfGrid DataSource="@Forecasts" AllowPaging="true" TValue="WeatherForecast" Width="100%" AllowResizing="false">
-    <GridPageSettings PageSize="10"></GridPageSettings>
+    <GridPageSettings PageSize="10" PageSizes="new int[] { 5, 10, 20}"></GridPageSettings>
     <GridColumns>
         <GridColumn Field=@nameof(WeatherForecast.Id) HeaderText="Id" IsPrimaryKey="true" Visible="false" Width="100"></GridColumn>
         <GridColumn Field=@nameof(WeatherForecast.Summary) HeaderText="Summary" MinWidth="@MinWidth"></GridColumn>
