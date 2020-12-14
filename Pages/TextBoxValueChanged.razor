@@ -1,0 +1,21 @@
+﻿@page "/textboxvaluechanged"
+
+<h1>TextBoxValueChanged</h1>
+
+<SfTextBox ValueChanged="ValueChanged" Value="@Value"></SfTextBox>
+<br />
+<SfButton OnClick="GenerateValue">Generate value</SfButton>
+
+@code {
+    string Value { get; set; } = "Initial value";
+
+    void ValueChanged(string value)
+    {
+        Value = "Value from TextBox";
+    }
+
+    void GenerateValue()
+    {
+        Value = "Value from button";
+    }
+}
