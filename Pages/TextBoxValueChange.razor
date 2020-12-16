@@ -1,0 +1,30 @@
+﻿@page "/textboxvaluechange"
+
+<h1>TextBoxValueChange</h1>
+
+<SfTextBox ValueChange="@ValueChange" Value="@Value"></SfTextBox>
+<br />
+<SfButton OnClick="@GenerateValue">Generate value</SfButton>
+
+@code {
+    string Value { get; set; } = "Initial value";
+    [Inject]
+    ILogger<TextBoxValueChange> Logger { get; set; }
+
+    void ValueChange(ChangedEventArgs args)
+    {
+        Value = args.Value;
+        // Use IsInteracted to limit event handler invocation to only events originating from control.
+        // At the moment, event will also be triggered if the value is changed from code.
+        // Bacause of this, we should not use ValueChanged, it does not provide the information about the event origin
+        if (args.IsInteracted)
+        {
+            Logger.Here(l => l.LogWarning("{@0}", args));
+        }
+    }
+
+    void GenerateValue()
+    {
+        Value = "Value from button";
+    }
+}
