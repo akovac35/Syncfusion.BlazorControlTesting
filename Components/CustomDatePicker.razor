@@ -1,0 +1,25 @@
+
+<SfDatePicker TValue="DateTime?" Value="Value" ValueChanged="ValueChangedInternalAsync"></SfDatePicker>
+
+@code{
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+    [Parameter]
+    public DateTime? Value { get; set;}
+    [Parameter]
+    public EventCallback<DateTime?> ValueChanged { get; set; }
+    
+    [Inject]
+    private ILogger<CustomDatePicker> Logger {get;set;}
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+
+    protected virtual Task ValueChangedInternalAsync(DateTime? value)
+    {
+        Logger.Here(l => l.LogInformation("{@0}", value));
+
+        if(ValueChanged.HasDelegate)
+        {
+            return ValueChanged.InvokeAsync(value);
+        }
+        return Task.CompletedTask;
+    }
+}

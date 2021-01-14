@@ -6,20 +6,52 @@
 <br />
 
 <p>ValueChanged event test:</p>
-<SfDatePicker Value="ValuechangedTestValue" ValueChanged="ValuechangedTestValueChanged" TValue="DateTime?"></SfDatePicker>
+<EditForm EditContext="ValueChangedEditContext">
+    <p>Wrapper date picker</p>
+    <CustomDatePicker Value="ValueChangedModelInstance.Value" ValueChanged="ValueChanged"></CustomDatePicker>
+    <p>SfDatePicker</p>
+    <SfDatePicker Value="ValueChangedModelInstance.Value" ValueChanged="ValueChanged" TValue="DateTime?" ShowClearButton="true"></SfDatePicker>
+</EditForm>
+
+
 
 @code{
     [Inject]
-    ILogger<DatePicker> Logger {get;set;}
+    ILogger<DatePicker> Logger { get; set; }
 
     DateTime? ClarButtonTestValue { get; set; }
-    DateTime? ValuechangedTestValue { get; set; }
 
-    void ValuechangedTestValueChanged(DateTime? value)
+    EditContext ValueChangedEditContext { get; set; }
+    ValueChangedModel ValueChangedModelInstance { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        ValueChangedModelInstance = new();
+        ValueChangedEditContext = new EditContext(ValueChangedModelInstance);
+    }
+
+    void ValueChanged(DateTime? value)
     {
         Logger.Here(l => l.LogInformation("{@0}", value));
-        ValuechangedTestValue = value;
+        ValueChangedModelInstance.Value = value;
     }
-    
 
+    public class ValueChangedModel
+    {
+        protected DateTime? _value;
+        public DateTime? Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                LoggerHelper<ValueChangedModel>.Here(l => l.LogInformation("{@0}", value));
+                _value = value;
+            }
+        }
+    }
 }
