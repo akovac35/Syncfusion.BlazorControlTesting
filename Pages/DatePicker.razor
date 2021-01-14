@@ -1,0 +1,25 @@
+﻿@page "/datepicker"
+
+<p>Clear button test:</p>
+<SfDatePicker @bind-Value="ClarButtonTestValue" ShowClearButton="true" TValue="DateTime?"></SfDatePicker>
+
+<br />
+
+<p>ValueChanged event test:</p>
+<SfDatePicker Value="ValuechangedTestValue" ValueChanged="ValuechangedTestValueChanged" TValue="DateTime?"></SfDatePicker>
+
+@code{
+    [Inject]
+    ILogger<DatePicker> Logger {get;set;}
+
+    DateTime? ClarButtonTestValue { get; set; }
+    DateTime? ValuechangedTestValue { get; set; }
+
+    void ValuechangedTestValueChanged(DateTime? value)
+    {
+        Logger.Here(l => l.LogInformation("{@0}", value));
+        ValuechangedTestValue = value;
+    }
+    
+
+}
