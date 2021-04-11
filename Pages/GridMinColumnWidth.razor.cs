@@ -15,7 +15,7 @@ namespace Syncfusion.BlazorControlTesting.Pages
         [Inject]
         WeatherForecastContextFactory ContextFactory { get; set; }
         [Inject]
-        ILogger<Index> Logger { get; set; }
+        ILogger<GridMinColumnWidth> Logger { get; set; }
         [Inject]
         CorrelationProviderAccessor CorrelationAccessor { get; set; }
 

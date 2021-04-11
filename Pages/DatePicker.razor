@@ -10,10 +10,28 @@
     <p>Wrapper date picker</p>
     <CustomDatePicker Value="ValueChangedModelInstance.Value" ValueChanged="ValueChanged"></CustomDatePicker>
     <p>SfDatePicker</p>
-    <SfDatePicker Value="ValueChangedModelInstance.Value" ValueChanged="ValueChanged" TValue="DateTime?" ShowClearButton="true"></SfDatePicker>
+    <SfDatePicker Value="ValueChangedModelInstance.Value" ValueChanged="ValueChanged" TValue="DateTime?" ShowClearButton="true" Readonly="DatePickerReadonly"></SfDatePicker>
 </EditForm>
 
+<br />
+<SfCheckBox @bind-Checked="DatePickerReadonly">Set DatePicker to readonly</SfCheckBox>
 
+<SfGrid AllowFiltering="true" AllowPaging="true" TValue="WeatherForecast" AllowResizing="true" AllowReordering="true" AllowSorting="true" AllowTextWrap="true" ShowColumnChooser="true" Width="100%" DataSource="@(new List<WeatherForecast>())">
+        <GridTextWrapSettings WrapMode="WrapMode.Content"></GridTextWrapSettings>
+        <GridPageSettings PageSize="10" PageSizes="true"></GridPageSettings>
+        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar">
+        </GridFilterSettings>
+        <GridColumns>
+            <GridColumn Field="@nameof(WeatherForecast.Date)" Type="ColumnType.DateTime">
+                <FilterTemplate>
+                     <SfDatePicker Value="ValueChangedModelInstance.Value" ValueChanged="ValueChanged" TValue="DateTime?" ShowClearButton="true" Readonly="DatePickerReadonly"></SfDatePicker>
+                </FilterTemplate>
+            </GridColumn>
+            <GridColumn Field="@nameof(WeatherForecast.TemperatureC)"></GridColumn>
+            <GridColumn Field="@nameof(WeatherForecast.TemperatureF)"></GridColumn>
+            <GridColumn Field="@nameof(WeatherForecast.Summary)"></GridColumn>
+        </GridColumns>
+    </SfGrid>
 
 @code{
     [Inject]
@@ -23,6 +41,8 @@
 
     EditContext ValueChangedEditContext { get; set; }
     ValueChangedModel ValueChangedModelInstance { get; set; }
+
+    bool DatePickerReadonly {get;set;}
 
     protected override void OnInitialized()
     {
