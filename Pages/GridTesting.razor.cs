@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.BlazorControlTesting.Data;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,6 +24,7 @@ namespace Syncfusion.BlazorControlTesting.Pages
 
         WeatherForecastContext Context { get; set; }
         IQueryable<WeatherForecast> Forecasts { get; set; }
+        List<WeatherForecast> ForecastsList { get; set; }
 
         protected override void OnInitialized()
         {
@@ -32,6 +34,7 @@ namespace Syncfusion.BlazorControlTesting.Pages
 
             Context = ContextFactory.Create();
             Forecasts = Context.Forecasts.AsQueryable();
+            ForecastsList = Forecasts.ToList();
 
             Logger.Here(l => l.Exiting());
         }
