@@ -2,7 +2,7 @@
 
 <h3>GridTesting</h3>
 
-<p>Try removing a row (bound to IQueryable):</p>
+<p>Try removing a row (bound to IQueryable) without a SfDataManager:</p>
 
 <SfGrid DataSource="@Forecasts" AllowPaging="true" TValue="WeatherForecast" AllowTextWrap="true" AllowResizing="true" Width="100%">
     <GridPageSettings PageSize="10" PageSizes="new int[] { 5, 10, 20}"></GridPageSettings>
@@ -13,7 +13,7 @@
                     OnActionComplete="OnGridActionCompleteAsync">
      </GridEvents>
     <GridColumns>
-        <GridColumn Field=@nameof(WeatherForecast.Id) HeaderText="Id" IsPrimaryKey="true" Visible="false" Width="100"></GridColumn>
+        <GridColumn Field=@nameof(WeatherForecast.Id) HeaderText="Id" IsPrimaryKey="true" IsIdentity="true" Visible="false" Width="100"></GridColumn>
         <GridColumn Field=@nameof(WeatherForecast.Summary) HeaderText="Summary"></GridColumn>
         <GridColumn Field=@nameof(WeatherForecast.TemperatureC) HeaderText="TempC" Width="100"></GridColumn>
         <GridColumn Field=@nameof(WeatherForecast.TemperatureF) HeaderText="TempF" Width="100"></GridColumn>
@@ -27,7 +27,7 @@
     </GridColumns>
 </SfGrid>
 
-<p>Try removing a row (bound to List) without a primary key column, which is required per documentation:</p>
+<p>Try removing a row (bound to List) without a primary key column:</p>
 
 <SfGrid DataSource="@ForecastsList" AllowPaging="true" TValue="WeatherForecast" AllowTextWrap="true" AllowResizing="true" Width="100%">
     <GridPageSettings PageSize="10" PageSizes="new int[] { 5, 10, 20}"></GridPageSettings>
