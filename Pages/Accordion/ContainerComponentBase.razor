@@ -1,0 +1,33 @@
+﻿@inherits NestedContainerComponentBase<TValue>
+@typeparam TValue
+
+@if (Readonly)
+{
+    @if (AllowEdit)
+    {
+        <div class="form-row" style="margin-bottom:10px">
+
+            <div class="@SetEditableButtonColumnCssClass">
+                <SfButton OnClick="@OnSetEditableAsync" style="width:100%" CssClass="@SetEditableButtonCssClass">@SetEditableButtonLabel</SfButton>
+            </div>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+    }
+
+    base.BuildRenderTree(__builder);
+}
+else
+{
+    base.BuildRenderTree(__builder);
+
+    <div class="form-row" style="margin-top:10px">
+        <div class="@CompleteEditingButtonColumnCssClass">
+            <SfButton OnClick="@OnCompleteEditingAsync" style="width:100%" CssClass="@CompleteEditingButtonCssClass">@CompleteEditingButtonLabel</SfButton>
+        </div>
+        <div class="col"></div>
+        <div class="@CancelEditingButtonColumnCssClass">
+            <SfButton IsPrimary="true" OnClick="@OnCancelEditingAsync" style="width:100%" CssClass="@CancelEditingButtonCssClass">@CancelEditingButtonLabel</SfButton>
+        </div>
+    </div>
+}

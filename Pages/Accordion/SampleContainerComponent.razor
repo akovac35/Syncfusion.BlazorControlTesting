@@ -1,0 +1,38 @@
+﻿@inherits ContainerComponentBase<SampleContainerComponentModel>
+
+
+@{
+    ChildContent = context => @<div>
+    @if (Readonly)
+    {
+        <div class="form-row">
+            <div class="col">
+                <SfTextBox Placeholder="Prop1" Value="@(context.Value.Prop1)" Readonly="true"></SfTextBox>
+            </div>
+
+        </div>
+        <div class="form-row">
+            <div class="col">
+                <SfTextBox Placeholder="Prop2" Value="@(context.Value.Prop2)" Readonly="true"></SfTextBox>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="form-row">
+            <div class="col">
+                <SfTextBox Placeholder="Prop1" @bind-Value="@(context.Value.Prop1)"></SfTextBox>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+                <SfTextBox Placeholder="Prop2" @bind-Value="@(context.Value.Prop2)"></SfTextBox>
+            </div>
+        </div>
+    }
+</div>;
+}
+
+@{
+    base.BuildRenderTree(__builder);
+}

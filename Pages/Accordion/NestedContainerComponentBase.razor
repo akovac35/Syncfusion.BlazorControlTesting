@@ -1,0 +1,25 @@
+﻿@inherits ComponentBase
+@typeparam TValue
+
+@if (Readonly)
+{
+    <div class="container" style="padding: 0; max-width:none">
+        @if (ChildContent != null)
+        {
+            ModelValue.Value = Value;
+
+            @ChildContent(ModelValue)
+        }
+    </div>
+}
+else
+{
+    <div class="container" style="padding: 0; max-width:none">
+        @if (ChildContent != null)
+        {
+            ModelValue.Value = ClonedValue;
+
+            @ChildContent(ModelValue)
+        }
+    </div>
+}
