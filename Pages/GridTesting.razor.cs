@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 
 namespace Syncfusion.BlazorControlTesting.Pages
 {
-    public partial class GridTesting: ComponentBase
+    public partial class GridTesting : ComponentBase
     {
         private bool disposedValue;
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         [Inject]
         WeatherForecastContextFactory ContextFactory { get; set; }
         [Inject]
@@ -25,6 +26,7 @@ namespace Syncfusion.BlazorControlTesting.Pages
         WeatherForecastContext Context { get; set; }
         IQueryable<WeatherForecast> Forecasts { get; set; }
         List<WeatherForecast> ForecastsList { get; set; }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         protected override void OnInitialized()
         {
@@ -62,7 +64,7 @@ namespace Syncfusion.BlazorControlTesting.Pages
             return Task.CompletedTask;
         }
 
-        protected virtual async Task OnGridActionCompleteAsync(ActionEventArgs<WeatherForecast> args)
+        protected virtual Task OnGridActionCompleteAsync(ActionEventArgs<WeatherForecast> args)
         {
             Logger.Here(l => l.Entering(args.Action, args.RowIndex, args.Type, args.RequestType));
 
@@ -72,6 +74,7 @@ namespace Syncfusion.BlazorControlTesting.Pages
             }
 
             Logger.Here(l => l.Exiting());
+            return Task.CompletedTask;
         }
 
         public void Dispose()

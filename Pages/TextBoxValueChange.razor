@@ -7,9 +7,11 @@
 <SfButton OnClick="@GenerateValue">Generate value</SfButton>
 
 @code {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     string Value { get; set; } = "Initial value";
     [Inject]
     ILogger<TextBoxValueChange> Logger { get; set; }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     void ValueChange(ChangedEventArgs args)
     {

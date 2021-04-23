@@ -31,5 +31,13 @@
                 <SfTextBox Placeholder="Text box 2" Value="@TextBoxValue" ValueChanged="TextBoxValueChanged"></SfTextBox>
             </ContentTemplate>
         </AccordionItem>
+        <AccordionItem>
+            <HeaderTemplate>
+                <div>Grid with dropdown list</div>
+            </HeaderTemplate>
+            <ContentTemplate>
+                <GridWithDropDownListComponent Value=@GridWithDropDownListComponentValue ValueChanged=@OnGridWithDropDownListComponentValueChangedAsync AllowEdit="true" />
+            </ContentTemplate>
+        </AccordionItem>
     </AccordionItems>
 </SfAccordion>

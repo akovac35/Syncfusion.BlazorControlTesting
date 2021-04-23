@@ -1,0 +1,57 @@
+﻿@inherits ContainerComponentBase<GridWithDropDownListComponentModel>
+
+@{
+    ChildContent = context => @<div>
+        @if (Readonly)
+        {
+            <div class="form-row">
+                <div class="col">
+                    <span> Only edit template is prepared.</span>
+                </div>
+            </div>
+        }
+        else
+        {
+            <SfButton OnClick=@AddRow>Add row</SfButton>
+
+            <SfGrid AllowPaging="false" DataSource=@(context.Value.Items) TValue="ModelItem" AllowTextWrap="true" AllowResizing="true" Width="100%" @ref=@GridComponentInstance>
+                <GridTextWrapSettings WrapMode=@(WrapMode.Both)></GridTextWrapSettings>
+                <GridEditSettings AllowAdding="false" AllowEditing="true" AllowDeleting="true" Mode="@EditMode.Normal"></GridEditSettings>
+                <GridColumns>
+                    <GridColumn Field=@nameof(ModelItem.MyGuid) HeaderText="MyGuid" IsPrimaryKey="true" IsIdentity="true" Visible="false"></GridColumn>
+
+                    <GridColumn HeaderText="Item" Field=@($"{nameof(ModelItem.Value)}.{nameof(DropDownListItem.Value)}")>
+                        <EditTemplate Context="rowContext">
+                            @{
+                                var tmp = (ModelItem)rowContext;
+                            }
+
+                            <CustomizedSfDropDownList TItem="DropDownListItem" TValue="string"
+                                            DataSource=@Values
+                                            Value=@(tmp.Value?.Key)
+                                            ItemChanged=@(item => tmp.Value = item)
+                                            NameOfTextProperty="Value"
+                                            NameOfValueProperty="Key"
+                                            FloatLabelType=@(Syncfusion.Blazor.Inputs.FloatLabelType.Never)
+                                            ShowClearButton="false" />
+                        </EditTemplate>
+                    </GridColumn>
+
+                    <GridColumn HeaderText="Manage Records" Width="150">
+                        <GridCommandColumns>
+                            <GridCommandColumn Type="CommandButtonType.Edit" ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-edit", CssClass="e-flat" })"></GridCommandColumn>
+                            <GridCommandColumn Type="CommandButtonType.Delete" ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-delete", CssClass="e-flat" })"></GridCommandColumn>
+                            <GridCommandColumn Type="CommandButtonType.Save" ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-save", CssClass="e-flat" })"></GridCommandColumn>
+                            <GridCommandColumn Type="CommandButtonType.Cancel" ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-cancel-icon", CssClass="e-flat" })"></GridCommandColumn>
+                        </GridCommandColumns>
+                    </GridColumn>
+
+                </GridColumns>
+            </SfGrid>
+        }
+    </div>;
+}
+
+@{
+    base.BuildRenderTree(__builder);
+}
