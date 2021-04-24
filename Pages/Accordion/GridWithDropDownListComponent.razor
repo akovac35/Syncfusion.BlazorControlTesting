@@ -20,29 +20,36 @@
                 <GridColumns>
                     <GridColumn Field=@nameof(ModelItem.MyGuid) HeaderText="MyGuid" IsPrimaryKey="true" IsIdentity="true" Visible="false"></GridColumn>
 
+                    <GridColumn Width="75px"></GridColumn>
+
                     <GridColumn HeaderText="Item" Field=@($"{nameof(ModelItem.Value)}.{nameof(DropDownListItem.Value)}")>
                         <EditTemplate Context="rowContext">
                             @{
                                 var tmp = (ModelItem)rowContext;
                             }
 
-                            <CustomizedSfDropDownList TItem="DropDownListItem" TValue="string"
-                                            DataSource=@Values
-                                            Value=@(tmp.Value?.Key)
-                                            ItemChanged=@(item => tmp.Value = item)
-                                            NameOfTextProperty="Value"
-                                            NameOfValueProperty="Key"
-                                            FloatLabelType=@(Syncfusion.Blazor.Inputs.FloatLabelType.Never)
-                                            ShowClearButton="false" />
+                            <CustomizedSfDropDownList2 TItem="DropDownListItem" TValue="string"
+                                                       DataSource=@Values
+                                                       Value=@(tmp.Value?.Key)
+                                                       ValueChanged=@(value => tmp.Value = Values.First(item => item.Key == value))
+                                                       FloatLabelType=@(Syncfusion.Blazor.Inputs.FloatLabelType.Never)
+                                                       ShowClearButton="false">
+                                <DropDownListFieldSettings Text="Value" Value="Key"></DropDownListFieldSettings>
+                            </CustomizedSfDropDownList2>
                         </EditTemplate>
                     </GridColumn>
 
                     <GridColumn HeaderText="Manage Records" Width="150">
                         <GridCommandColumns>
                             <GridCommandColumn Type="CommandButtonType.Edit" ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-edit", CssClass="e-flat" })"></GridCommandColumn>
-                            <GridCommandColumn Type="CommandButtonType.Delete" ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-delete", CssClass="e-flat" })"></GridCommandColumn>
                             <GridCommandColumn Type="CommandButtonType.Save" ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-save", CssClass="e-flat" })"></GridCommandColumn>
                             <GridCommandColumn Type="CommandButtonType.Cancel" ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-cancel-icon", CssClass="e-flat" })"></GridCommandColumn>
+                        </GridCommandColumns>
+                    </GridColumn>
+
+                    <GridColumn HeaderText="Delete" Width="75">
+                        <GridCommandColumns>
+                            <GridCommandColumn Type="CommandButtonType.Delete" ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-delete", CssClass="e-flat" })"></GridCommandColumn>
                         </GridCommandColumns>
                     </GridColumn>
 

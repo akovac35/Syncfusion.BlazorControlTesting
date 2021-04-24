@@ -29,11 +29,10 @@ namespace Syncfusion.BlazorControlTesting.Components
 #pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 
         protected int _valueChangedHash = 0;
+        protected int _defaultValueChangedHash = 0;
 
         protected override void OnInitialized()
         {
-            base.OnInitialized();
-
             ChildContent = (RenderTreeBuilder builder) =>
             {
                 builder.OpenComponent<DropDownListFieldSettings>(0);
@@ -44,6 +43,11 @@ namespace Syncfusion.BlazorControlTesting.Components
 
             ValueChanged = EventCallback.Factory.Create<TValue>(this, item => OnValueChangedInternalAsync(item));
             _valueChangedHash = HashCode.Combine(ValueChanged);
+            _defaultValueChangedHash = _valueChangedHash;
+
+            FloatLabelType = Blazor.Inputs.FloatLabelType.Always;
+
+            base.OnInitialized();
         }
 
         protected virtual async Task OnValueChangedInternalAsync(TValue value)
@@ -64,7 +68,13 @@ namespace Syncfusion.BlazorControlTesting.Components
 
         protected override void OnParametersSet()
         {
-            if (_valueChangedHash != HashCode.Combine(ValueChanged) && ValueChanged.HasDelegate && ItemChanged.HasDelegate)
+            var tmpValueChangedHash = HashCode.Combine(ValueChanged);
+            if (_valueChangedHash != tmpValueChangedHash)
+            {
+                _valueChangedHash = tmpValueChangedHash;
+            }
+
+            if (_defaultValueChangedHash != _valueChangedHash && ValueChanged.HasDelegate && ItemChanged.HasDelegate)
             {
                 throw new ArgumentException($"Please use either {nameof(ItemChanged)} or {nameof(ValueChanged)}, but not both.", nameof(ItemChanged));
             }
