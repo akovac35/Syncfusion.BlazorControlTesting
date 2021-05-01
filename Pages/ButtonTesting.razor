@@ -1,0 +1,19 @@
+﻿@page "/buttontesting"
+
+<SfButton OnClick=@OnClickAsync >With await</SfButton>
+
+<br />
+
+<SfButton OnClick=@OnClickWithTaskContinuationAsync >With continuation</SfButton>
+
+<br />
+
+<button @onclick=@OnClickAsync >With await - MS button</button>
+
+<br />
+
+<button @onclick=@OnClickWithTaskContinuationAsync >With continuation - MS button</button>
+
+<br />
+
+<button @onclick=@OnClick >Synchronous</button>
