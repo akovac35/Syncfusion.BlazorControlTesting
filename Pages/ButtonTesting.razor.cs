@@ -42,5 +42,29 @@ namespace Syncfusion.BlazorControlTesting.Pages
 
             Logger.Here(l => l.Exiting(LogLevel.Information));
         }
+
+
+        bool IsDisabled { get; set; } = false;
+        void OnClickWithDisabling()
+        {            
+            Logger.Here(l => l.Entering(LogLevel.Information));
+
+            if (IsDisabled)
+                goto RETURN;
+
+            IsDisabled = true;
+
+            try
+            {
+                Task.Delay(1200).Wait();
+            }
+            finally
+            {
+                IsDisabled = false;
+            }
+
+            RETURN:
+            Logger.Here(l => l.Exiting(LogLevel.Information));
+        }
     }
 }
