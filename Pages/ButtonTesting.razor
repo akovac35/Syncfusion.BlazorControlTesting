@@ -4,6 +4,10 @@
 
 <br />
 
+<SfButton OnClick=@OnClickWithFakedTaskAsync>With faked task</SfButton>
+
+<br />
+
 <SfButton OnClick=@OnClickWithTaskContinuationAsync>With continuation</SfButton>
 
 <br />
@@ -20,6 +24,10 @@
 
 <br />
 
+<button @onclick=@OnClickWithFakedTaskAsync>With faked task - MS button</button>
+
+<br />
+
 <button @onclick=@OnClickWithTaskContinuationAsync>With continuation - MS button</button>
 
 <br />
@@ -29,6 +37,10 @@
 <br />
 
 <CustomSfButton OnCustomClick=@OnClickAsync>With await - custom</CustomSfButton>
+
+<br />
+
+<CustomSfButton OnCustomClick=@OnClickWithFakedTaskAsync>With faked task</CustomSfButton>
 
 <br />
 

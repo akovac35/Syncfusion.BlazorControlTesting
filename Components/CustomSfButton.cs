@@ -36,7 +36,7 @@ namespace Syncfusion.BlazorControlTesting.Components
             Disabled = true;
 
             try
-            {
+            {                
                 await OnCustomClick.InvokeAsync(args);
             }
             finally
