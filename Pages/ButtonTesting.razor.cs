@@ -27,19 +27,21 @@ namespace Syncfusion.BlazorControlTesting.Pages
 
         Task OnClickWithTaskContinuationAsync()
         {
-            Logger.Here(l => l.LogInformation("Entered"));
+            Logger.Here(l => l.Entering(LogLevel.Information));
 
-            return Task.Delay(700).ContinueWith(async antecedent => await Task.Delay(500));
+            return Task.Delay(1200).ContinueWith(antecedent => Logger.Here(l => l.Exiting(LogLevel.Information)));
         }
 
         async Task OnClickWithFakedTaskAsync()
         {
-            Logger.Here(l => l.LogInformation("Entered"));
+            Logger.Here(l => l.Entering(LogLevel.Information));
 
             // Trigger Blazor lifecycle methods ...
             await Task.Delay(50);
 
             Task.Delay(1200).Wait();
+
+            Logger.Here(l => l.Exiting(LogLevel.Information));
         }
 
         void OnClick()
