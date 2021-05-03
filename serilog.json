@@ -5,7 +5,10 @@
       "Default": "Verbose",
       "Override": {
         "Microsoft": "Information",
-        "Microsoft.EntityFrameworkCore.Database.Command": "Warning"
+        "Microsoft.EntityFrameworkCore.Database.Command": "Warning",
+        "Microsoft.AspNetCore.Hosting.Diagnostics": "Warning",
+        "Serilog.AspNetCore.RequestLoggingMiddleware": "Warning",
+        "Microsoft.AspNetCore.Routing.EndpointMiddleware": "Warning"
       }
     },
     "Enrich": [

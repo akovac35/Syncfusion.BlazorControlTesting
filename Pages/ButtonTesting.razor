@@ -1,19 +1,35 @@
 ﻿@page "/buttontesting"
 
-<SfButton OnClick=@OnClickAsync >With await</SfButton>
+<SfButton OnClick=@OnClickAsync>With await</SfButton>
 
 <br />
 
-<SfButton OnClick=@OnClickWithTaskContinuationAsync >With continuation</SfButton>
+<SfButton OnClick=@OnClickWithTaskContinuationAsync>With continuation</SfButton>
 
 <br />
 
-<button @onclick=@OnClickAsync >With await - MS button</button>
+<SfButton OnClick=@OnClick>Synchronous</SfButton>
 
 <br />
 
-<button @onclick=@OnClickWithTaskContinuationAsync >With continuation - MS button</button>
+<button @onclick=@OnClickAsync>With await - MS button</button>
 
 <br />
 
-<button @onclick=@OnClick >Synchronous</button>
+<button @onclick=@OnClickWithTaskContinuationAsync>With continuation - MS button</button>
+
+<br />
+
+<button @onclick=@OnClick>Synchronous - MS button</button>
+
+<br />
+
+<CustomSfButton OnCustomClick=@OnClickAsync>With await - custom</CustomSfButton>
+
+<br />
+
+<CustomSfButton OnCustomClick=@OnClickWithTaskContinuationAsync>With continuation - custom</CustomSfButton>
+
+<br />
+
+<CustomSfButton OnCustomClick=@OnClick>Synchronous - custom</CustomSfButton>

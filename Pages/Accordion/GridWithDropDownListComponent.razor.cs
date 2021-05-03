@@ -38,7 +38,7 @@ namespace Syncfusion.BlazorControlTesting.Pages.Accordion
 
     public class DropDownListItem
     {
-        public DropDownListItem(){}
+        public DropDownListItem() { }
 
         public DropDownListItem(string? key, string? value)
         {

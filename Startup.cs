@@ -1,6 +1,7 @@
 using com.github.akovac35.Logging.AspNetCore.Correlation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -70,7 +71,10 @@ namespace Syncfusion.BlazorControlTesting
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapBlazorHub();
+                endpoints.MapBlazorHub(options =>
+                {
+                    options.Transports = HttpTransportType.LongPolling;
+                });
                 endpoints.MapFallbackToPage("/_Host");
             });
         }

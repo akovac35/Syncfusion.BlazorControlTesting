@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Rendering;
-using Syncfusion.Blazor.DropDowns;
-using System;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using Syncfusion.Blazor.DropDowns;
 
 namespace Syncfusion.BlazorControlTesting.Components
 {
