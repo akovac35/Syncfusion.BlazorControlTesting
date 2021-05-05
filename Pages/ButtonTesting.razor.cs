@@ -16,11 +16,11 @@ namespace Syncfusion.BlazorControlTesting.Pages
         {
             Logger.Here(l => l.Entering(LogLevel.Information));
 
-            await Task.Delay(700);
+            await Task.Delay(200);
 
             // Here the screen should NOT be updated as per Blazor lifecycle rules, we need to use StateHasChanged
 
-            await Task.Delay(500);
+            await Task.Delay(200);
 
             Logger.Here(l => l.Exiting(LogLevel.Information));
         }
@@ -29,7 +29,7 @@ namespace Syncfusion.BlazorControlTesting.Pages
         {
             Logger.Here(l => l.Entering(LogLevel.Information));
 
-            return Task.Delay(1200).ContinueWith(antecedent => Logger.Here(l => l.Exiting(LogLevel.Information)));
+            return Task.Delay(400).ContinueWith(antecedent => Logger.Here(l => l.Exiting(LogLevel.Information)));
         }
 
         async Task OnClickWithFakedTaskAsync()
@@ -39,7 +39,7 @@ namespace Syncfusion.BlazorControlTesting.Pages
             // Trigger Blazor lifecycle methods ...
             await Task.Delay(50);
 
-            Task.Delay(1200).Wait();
+            Task.Delay(350).Wait();
 
             Logger.Here(l => l.Exiting(LogLevel.Information));
         }
@@ -48,7 +48,7 @@ namespace Syncfusion.BlazorControlTesting.Pages
         {
             Logger.Here(l => l.Entering(LogLevel.Information));
 
-            Task.Delay(1200).Wait();
+            Task.Delay(400).Wait();
 
             Logger.Here(l => l.Exiting(LogLevel.Information));
         }
@@ -66,7 +66,7 @@ namespace Syncfusion.BlazorControlTesting.Pages
 
             try
             {
-                Task.Delay(1200).Wait();
+                Task.Delay(400).Wait();
             }
             finally
             {
