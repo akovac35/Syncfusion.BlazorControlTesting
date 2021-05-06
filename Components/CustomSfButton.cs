@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Web;
 using System;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Syncfusion.BlazorControlTesting.Components
@@ -73,15 +74,14 @@ namespace Syncfusion.BlazorControlTesting.Components
         }
     }
 
-    public class CustomSfButton3<T> : Syncfusion.Blazor.Buttons.SfButton
-        where T : System.Delegate
+    public class CustomSfButton3 : Syncfusion.Blazor.Buttons.SfButton
     {
         [Inject]
         protected NavigationManager NavigationManagerInstance { get; set; } = null!;
 
         [Parameter]
-        public T? OnCustomClick { get; set; }
-        
+        public EventCallback<MouseEventArgs> OnCustomClick { get; set; }
+
         [Parameter]
         public int ClickFilterMilliSeconds { get; set; } = 500;
 
@@ -99,7 +99,7 @@ namespace Syncfusion.BlazorControlTesting.Components
                 IsInitialized = true;
             }
 
-            OnClick = EventCallback.Factory.Create(this, CustomOnClickHandler);
+            OnClick = EventCallback.Factory.Create(this, OnCustomClickHanlder);
             OnClickHash = HashCode.Combine(OnClick);
 
             base.OnInitialized();
@@ -110,21 +110,15 @@ namespace Syncfusion.BlazorControlTesting.Components
             if (OnClickHash != HashCode.Combine(OnClick))
                 throw new ArgumentException($"Please use property {nameof(OnCustomClick)} instead of {nameof(OnClick)}.", nameof(OnClick));
 
-            if (!(
-                OnCustomClick is Action
-                || OnCustomClick is Action<MouseEventArgs>
-                || OnCustomClick is Func<Task>
-                || OnCustomClick is Func<MouseEventArgs, Task>
-             )) throw new ArgumentException("Only Action, Action<MouseEventArgs>, Func<Task> and Func<MouseEventArgs, Task> delegate types are supported.", nameof(OnCustomClick));
-
             base.OnParametersSet();
         }
 
-        protected virtual async Task CustomOnClickHandler(MouseEventArgs args)
+        private async Task OnCustomClickHanlder(MouseEventArgs args)
         {
-            if (Disabled || OnCustomClick == null)
+            if (Disabled || !OnCustomClick.HasDelegate)
                 return;
 
+            // Handle unintentional double clicks
             if (PreviousClick != null && DateTime.Now.Subtract(PreviousClick.Value).TotalMilliseconds <= ClickFilterMilliSeconds)
                 return;
 
@@ -132,27 +126,27 @@ namespace Syncfusion.BlazorControlTesting.Components
 
             try
             {
-                if (OnCustomClick is Action synchronous)
+                if (IsCallbackType(OnCustomClick, typeof(Func<Task>)))
+                {
+                    await OnCustomClick.InvokeAsync();
+                }
+                else if (IsCallbackType(OnCustomClick, typeof(Action)))
                 {
                     // Trigger blazor page update lifecycle ...
                     await Task.Delay(50);
 
-                    synchronous();
+                    await OnCustomClick.InvokeAsync();
                 }
-                else if (OnCustomClick is Action<MouseEventArgs> synchronousWithArgs)
+                else if (IsCallbackType(OnCustomClick, typeof(Func<MouseEventArgs, Task>)))
+                {
+                    await OnCustomClick.InvokeAsync(args);
+                }
+                else if (IsCallbackType(OnCustomClick, typeof(Action<MouseEventArgs>)))
                 {
                     // Trigger blazor page update lifecycle ...
                     await Task.Delay(50);
 
-                    synchronousWithArgs(args);
-                }
-                else if (OnCustomClick is Func<Task> asynchronous)
-                {
-                    await asynchronous();
-                }
-                else if (OnCustomClick is Func<MouseEventArgs, Task> asynchronousWithArgs)
-                {
-                    await asynchronousWithArgs(args);
+                    await OnCustomClick.InvokeAsync(args);
                 }
                 else throw new NotSupportedException();
             }
@@ -162,11 +156,30 @@ namespace Syncfusion.BlazorControlTesting.Components
                 PreviousClick = DateTime.Now;
             }
         }
-
+        
         private void OnLocationChanged(object? source, LocationChangedEventArgs args)
         {
             Disabled = true;
             IsLocationChanged = true;
+        }
+
+        private bool IsCallbackType(object callback, Type t)
+        {
+            Type typ;
+            if (callback is EventCallback)
+            {
+                typ = typeof(EventCallback);
+            }
+            else if (callback is EventCallback<MouseEventArgs>)
+            {
+                typ = typeof(EventCallback<MouseEventArgs>);
+            }
+            else
+                throw new NotSupportedException();
+
+            FieldInfo? delField = typ.GetField("Delegate", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
+            if (delField == null) throw new NotSupportedException();
+            return delField.GetValue(callback)?.GetType() == t;
         }
 
         protected override void Dispose(bool disposing)
