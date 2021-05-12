@@ -1,6 +1,7 @@
 ﻿@page "/numerictextbox"
+@using Sberbank.BlazorComponents.Common.Client.Components
 
-<SfNumericTextBox TValue="double?" @bind-Value=@DoubleValue Placeholder="Double value"/>
+<CustomNumberInputComponent TValue="double?" @bind-Value=@DoubleValue Placeholder="Double value"/>
 <SfNumericTextBox TValue="int?" @bind-Value=@IntValue Placeholder="Int value"/>
 
 
