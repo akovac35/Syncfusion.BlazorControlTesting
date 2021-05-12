@@ -1,0 +1,10 @@
+﻿@page "/numerictextbox"
+
+<SfNumericTextBox TValue="double?" @bind-Value=@DoubleValue Placeholder="Double value"/>
+<SfNumericTextBox TValue="int?" @bind-Value=@IntValue Placeholder="Int value"/>
+
+
+@code{
+    private double? DoubleValue {get; set;}
+    private int? IntValue {get; set;}
+}
