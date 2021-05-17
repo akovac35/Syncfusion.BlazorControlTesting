@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using Syncfusion.Blazor;
 using Syncfusion.BlazorControlTesting.Data;
+using System.Threading.Tasks;
 
 namespace Syncfusion.BlazorControlTesting
 {
@@ -69,8 +70,17 @@ namespace Syncfusion.BlazorControlTesting
 
             app.UseRouting();
 
+            // Simulate cloud latency ...
+            app.Use(async (context, next) =>
+            {
+                await Task.Delay(30);
+                await next.Invoke();
+                await Task.Delay(30);
+            });
+
             app.UseEndpoints(endpoints =>
             {
+                // Use slowest transport mode for testing
                 endpoints.MapBlazorHub(options =>
                 {
                     options.Transports = HttpTransportType.LongPolling;

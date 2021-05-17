@@ -1,0 +1,107 @@
+﻿@page "/dropdown"
+
+<SfDropDownList @ref=@(CountryCodes1)
+                            AllowFiltering="true"
+                            Value=@(ValueCountry1?.Code)
+                            DataSource=@Countries
+                            ValueChanged=@PhoneCountryChangedAsync1
+                            TValue="string"
+                            TItem="PhoneCountry"
+                            ShowClearButton="false"
+                            Placeholder="Select country">
+    <DropDownListFieldSettings Text=@nameof(PhoneCountry.CountryCodeAndName) Value=@nameof(PhoneCountry.Code) />
+    <DropDownListEvents TValue="string" TItem="PhoneCountry" Filtering=@OnFilter1 />
+</SfDropDownList>
+
+<SfDropDownList @ref=@(CountryCodes2)
+                            AllowFiltering="true"
+                            Value=@(ValueCountry2?.Code)
+                            DataSource=@Countries
+                            ValueChanged=@PhoneCountryChangedAsync2
+                            TValue="string"
+                            TItem="PhoneCountry"
+                            ShowClearButton="false"
+                            Placeholder="Select country">
+    <DropDownListFieldSettings Text=@nameof(PhoneCountry.CountryCodeAndName) Value=@nameof(PhoneCountry.Code) />
+    <DropDownListEvents TValue="string" TItem="PhoneCountry" Filtering=@OnFilter2 />
+</SfDropDownList>
+
+<SfDropDownList @ref=@(CountryCodes3)
+                            AllowFiltering="true"
+                            Value=@(ValueCountry3?.Code)
+                            DataSource=@Countries
+                            ValueChanged=@PhoneCountryChangedAsync3
+                            TValue="string"
+                            TItem="PhoneCountry"
+                            ShowClearButton="false"
+                            Placeholder="Select country">
+    <DropDownListFieldSettings Text=@nameof(PhoneCountry.CountryCodeAndName) Value=@nameof(PhoneCountry.Code) />
+    <DropDownListEvents TValue="string" TItem="PhoneCountry" Filtering=@OnFilter3 />
+</SfDropDownList>
+
+@code
+{
+    private SfDropDownList<string, PhoneCountry>? CountryCodes1 {get; set;}
+    private SfDropDownList<string, PhoneCountry>? CountryCodes2 {get; set;}
+    private SfDropDownList<string, PhoneCountry>? CountryCodes3 {get; set;}
+
+    private List<PhoneCountry> Countries { get; set; } = PhoneCountry.Countries;
+
+    private PhoneCountry? ValueCountry1 { get; set; }
+    private PhoneCountry? ValueCountry2 { get; set; }
+    private PhoneCountry? ValueCountry3 { get; set; }
+
+    private async Task OnFilter1(FilteringEventArgs args)
+    {
+        args.PreventDefaultAction = true;
+        var query = new Query().Where(new WhereFilter() { Field = "CountryCodeAndName", Operator = "contains", value = args.Text, IgnoreCase = true });
+
+        query = !string.IsNullOrEmpty(args.Text) ? query : new Query();
+
+        if (CountryCodes1 != null)
+            await CountryCodes1.Filter(Countries, query);
+    }
+
+    private async Task OnFilter2(FilteringEventArgs args)
+    {
+        args.PreventDefaultAction = true;
+        var query = new Query().Where(new WhereFilter() { Field = "CountryCodeAndName", Operator = "contains", value = args.Text, IgnoreCase = true });
+
+        query = !string.IsNullOrEmpty(args.Text) ? query : new Query();
+
+        if (CountryCodes2 != null)
+            await CountryCodes2.Filter(Countries, query);
+    }
+
+    private async Task OnFilter3(FilteringEventArgs args)
+    {
+        args.PreventDefaultAction = true;
+        var query = new Query().Where(new WhereFilter() { Field = "CountryCodeAndName", Operator = "contains", value = args.Text, IgnoreCase = true });
+
+        query = !string.IsNullOrEmpty(args.Text) ? query : new Query();
+
+        if (CountryCodes3 != null)
+            await CountryCodes3.Filter(Countries, query);
+    }
+
+    private Task PhoneCountryChangedAsync1(string? value)
+    {
+        ValueCountry1 = Countries.FirstOrDefault(item => item.Code == value);
+        
+        return Task.CompletedTask;
+    }
+
+    private Task PhoneCountryChangedAsync2(string? value)
+    {
+        ValueCountry2 = Countries.FirstOrDefault(item => item.Code == value);
+        
+        return Task.CompletedTask;
+    }
+
+    private Task PhoneCountryChangedAsync3(string? value)
+    {
+        ValueCountry3 = Countries.FirstOrDefault(item => item.Code == value);
+        
+        return Task.CompletedTask;
+    }
+}
