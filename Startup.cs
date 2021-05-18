@@ -73,9 +73,9 @@ namespace Syncfusion.BlazorControlTesting
             // Simulate cloud latency ...
             app.Use(async (context, next) =>
             {
-                await Task.Delay(30);
+                await Task.Delay(35);
                 await next.Invoke();
-                await Task.Delay(30);
+                await Task.Delay(35);
             });
 
             app.UseEndpoints(endpoints =>

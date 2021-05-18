@@ -22,6 +22,19 @@
     </InputSelect>
 </EditForm>
 
+<SfDropDownList @ref=@(CountryCodes3)
+                            AllowFiltering="true"
+                            Value=@(ValueCountry3?.Code)
+                            DataSource=@Countries
+                            ValueChanged=@PhoneCountryChangedAsync3
+                            TValue="string"
+                            TItem="PhoneCountry"
+                            ShowClearButton="false"
+                            Placeholder="Select country">
+    <DropDownListFieldSettings Text=@nameof(PhoneCountry.CountryCodeAndName) Value=@nameof(PhoneCountry.Code) />
+    <DropDownListEvents TValue="string" TItem="PhoneCountry" Filtering=@OnFilter3 />
+</SfDropDownList>
+
 @code
 {
     private SfDropDownList<string, PhoneCountry>? CountryCodes1 {get; set;}
