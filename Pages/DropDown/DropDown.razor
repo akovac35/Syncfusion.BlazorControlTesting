@@ -13,31 +13,14 @@
     <DropDownListEvents TValue="string" TItem="PhoneCountry" Filtering=@OnFilter1 />
 </SfDropDownList>
 
-<SfDropDownList @ref=@(CountryCodes2)
-                            AllowFiltering="true"
-                            Value=@(ValueCountry2?.Code)
-                            DataSource=@Countries
-                            ValueChanged=@PhoneCountryChangedAsync2
-                            TValue="string"
-                            TItem="PhoneCountry"
-                            ShowClearButton="false"
-                            Placeholder="Select country">
-    <DropDownListFieldSettings Text=@nameof(PhoneCountry.CountryCodeAndName) Value=@nameof(PhoneCountry.Code) />
-    <DropDownListEvents TValue="string" TItem="PhoneCountry" Filtering=@OnFilter2 />
-</SfDropDownList>
-
-<SfDropDownList @ref=@(CountryCodes3)
-                            AllowFiltering="true"
-                            Value=@(ValueCountry3?.Code)
-                            DataSource=@Countries
-                            ValueChanged=@PhoneCountryChangedAsync3
-                            TValue="string"
-                            TItem="PhoneCountry"
-                            ShowClearButton="false"
-                            Placeholder="Select country">
-    <DropDownListFieldSettings Text=@nameof(PhoneCountry.CountryCodeAndName) Value=@nameof(PhoneCountry.Code) />
-    <DropDownListEvents TValue="string" TItem="PhoneCountry" Filtering=@OnFilter3 />
-</SfDropDownList>
+<EditForm Model="ValueCountry2">
+    <InputSelect TValue="string" Value=@(ValueCountry2.Code) ValueChanged=@OnSelectChanged ValueExpression=@(() => ValueCountry2.Code) >
+        @foreach (var c in Countries)
+        {
+            <option value=@(c.Code)>@(c.CountryCodeAndName)</option>
+        }
+    </InputSelect>
+</EditForm>
 
 @code
 {
@@ -48,7 +31,7 @@
     private List<PhoneCountry> Countries { get; set; } = PhoneCountry.Countries;
 
     private PhoneCountry? ValueCountry1 { get; set; }
-    private PhoneCountry? ValueCountry2 { get; set; }
+    private PhoneCountry ValueCountry2 { get; set; } = new();
     private PhoneCountry? ValueCountry3 { get; set; }
 
     private async Task OnFilter1(FilteringEventArgs args)
@@ -60,17 +43,6 @@
 
         if (CountryCodes1 != null)
             await CountryCodes1.Filter(Countries, query);
-    }
-
-    private async Task OnFilter2(FilteringEventArgs args)
-    {
-        args.PreventDefaultAction = true;
-        var query = new Query().Where(new WhereFilter() { Field = "CountryCodeAndName", Operator = "contains", value = args.Text, IgnoreCase = true });
-
-        query = !string.IsNullOrEmpty(args.Text) ? query : new Query();
-
-        if (CountryCodes2 != null)
-            await CountryCodes2.Filter(Countries, query);
     }
 
     private async Task OnFilter3(FilteringEventArgs args)
@@ -91,16 +63,16 @@
         return Task.CompletedTask;
     }
 
-    private Task PhoneCountryChangedAsync2(string? value)
+    private Task PhoneCountryChangedAsync3(string? value)
     {
-        ValueCountry2 = Countries.FirstOrDefault(item => item.Code == value);
+        ValueCountry3 = Countries.FirstOrDefault(item => item.Code == value);
         
         return Task.CompletedTask;
     }
 
-    private Task PhoneCountryChangedAsync3(string? value)
+    private Task OnSelectChanged(string? value)
     {
-        ValueCountry3 = Countries.FirstOrDefault(item => item.Code == value);
+        ValueCountry2 = Countries.FirstOrDefault(item => item.Code == value) ?? new();
         
         return Task.CompletedTask;
     }
