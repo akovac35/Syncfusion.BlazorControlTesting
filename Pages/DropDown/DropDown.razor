@@ -7,7 +7,7 @@
                             ValueChanged=@PhoneCountryChangedAsync1
                             TValue="string"
                             TItem="PhoneCountry"
-                            ShowClearButton="false"
+                            ShowClearButton="true"
                             Placeholder="Select country">
     <DropDownListFieldSettings Text=@nameof(PhoneCountry.CountryCodeAndName) Value=@nameof(PhoneCountry.Code) />
     <DropDownListEvents TValue="string" TItem="PhoneCountry" Filtering=@OnFilter1 />
@@ -29,7 +29,7 @@
                             ValueChanged=@PhoneCountryChangedAsync3
                             TValue="string"
                             TItem="PhoneCountry"
-                            ShowClearButton="false"
+                            ShowClearButton="true"
                             Placeholder="Select country">
     <DropDownListFieldSettings Text=@nameof(PhoneCountry.CountryCodeAndName) Value=@nameof(PhoneCountry.Code) />
     <DropDownListEvents TValue="string" TItem="PhoneCountry" Filtering=@OnFilter3 />
@@ -43,7 +43,7 @@
 
     private List<PhoneCountry> Countries { get; set; } = PhoneCountry.Countries;
 
-    private PhoneCountry? ValueCountry1 { get; set; }
+    private PhoneCountry? ValueCountry1 { get; set; } = new PhoneCountry { Code = "+386", CountryName = "Slovenia" }; 
     private PhoneCountry ValueCountry2 { get; set; } = new();
     private PhoneCountry? ValueCountry3 { get; set; }
 
