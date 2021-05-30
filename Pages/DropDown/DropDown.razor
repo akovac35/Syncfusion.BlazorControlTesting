@@ -1,6 +1,9 @@
 ﻿@page "/dropdown"
+@using Microsoft.AspNetCore.WebUtilities
 
-<SfDropDownList @ref=@(CountryCodes1)
+@if (EnableSf)
+{
+    <SfDropDownList @ref=@(CountryCodes1)
                             AllowFiltering="true"
                             Value=@(ValueCountry1?.Code)
                             DataSource=@Countries
@@ -9,43 +12,57 @@
                             TItem="PhoneCountry"
                             ShowClearButton="true"
                             Placeholder="Select country">
-    <DropDownListFieldSettings Text=@nameof(PhoneCountry.CountryCodeAndName) Value=@nameof(PhoneCountry.Code) />
-    <DropDownListEvents TValue="string" TItem="PhoneCountry" Filtering=@OnFilter1 />
-</SfDropDownList>
+        <DropDownListFieldSettings Text=@nameof(PhoneCountry.CountryCodeAndName) Value=@nameof(PhoneCountry.Code) />
+        <DropDownListEvents TValue="string" TItem="PhoneCountry" Filtering=@OnFilter1 />
+    </SfDropDownList>
 
-<EditForm Model="ValueCountry2">
-    <InputSelect TValue="string" Value=@(ValueCountry2.Code) ValueChanged=@OnSelectChanged ValueExpression=@(() => ValueCountry2.Code) >
-        @foreach (var c in Countries)
-        {
-            <option value=@(c.Code)>@(c.CountryCodeAndName)</option>
-        }
-    </InputSelect>
-</EditForm>
+    <hr />
 
-<SfDropDownList @ref=@(CountryCodes3)
-                            AllowFiltering="true"
-                            Value=@(ValueCountry3?.Code)
-                            DataSource=@Countries
-                            ValueChanged=@PhoneCountryChangedAsync3
-                            TValue="string"
-                            TItem="PhoneCountry"
-                            ShowClearButton="true"
-                            Placeholder="Select country">
-    <DropDownListFieldSettings Text=@nameof(PhoneCountry.CountryCodeAndName) Value=@nameof(PhoneCountry.Code) />
-    <DropDownListEvents TValue="string" TItem="PhoneCountry" Filtering=@OnFilter3 />
-</SfDropDownList>
+    <button @onclick=@(args => EnableSf = false)>To Microsoft variant</button>
+}
+else
+{
+
+    <EditForm Model="ValueCountry2">
+        <InputSelect TValue="string" Value=@(ValueCountry2.Code) ValueChanged=@OnSelectChanged ValueExpression=@(() => ValueCountry2.Code) >
+            @foreach (var c in Countries)
+            {
+                <option value=@(c.Code)>@(c.CountryCodeAndName)</option>
+            }
+        </InputSelect>
+    </EditForm>
+
+    <hr />
+
+    <button @onclick=@(args => EnableSf = true)>To Syncfusion variant</button>
+
+}
 
 @code
 {
+    [Inject]
+    private NavigationManager NavigationManagerInstance { get; set; } = null!;
+
     private SfDropDownList<string, PhoneCountry>? CountryCodes1 {get; set;}
     private SfDropDownList<string, PhoneCountry>? CountryCodes2 {get; set;}
-    private SfDropDownList<string, PhoneCountry>? CountryCodes3 {get; set;}
 
     private List<PhoneCountry> Countries { get; set; } = PhoneCountry.Countries;
 
-    private PhoneCountry? ValueCountry1 { get; set; } = new PhoneCountry { Code = "+386", CountryName = "Slovenia" }; 
+    private PhoneCountry? ValueCountry1 { get; set; } = new();
     private PhoneCountry ValueCountry2 { get; set; } = new();
-    private PhoneCountry? ValueCountry3 { get; set; }
+
+    private bool EnableSf { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        var uri = NavigationManagerInstance.ToAbsoluteUri(NavigationManagerInstance.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("enablesf", out var _enableSf))
+        {
+            EnableSf = Convert.ToBoolean(_enableSf);
+        }
+
+        base.OnParametersSet();
+    }
 
     private async Task OnFilter1(FilteringEventArgs args)
     {
@@ -58,27 +75,9 @@
             await CountryCodes1.Filter(Countries, query);
     }
 
-    private async Task OnFilter3(FilteringEventArgs args)
-    {
-        args.PreventDefaultAction = true;
-        var query = new Query().Where(new WhereFilter() { Field = "CountryCodeAndName", Operator = "contains", value = args.Text, IgnoreCase = true });
-
-        query = !string.IsNullOrEmpty(args.Text) ? query : new Query();
-
-        if (CountryCodes3 != null)
-            await CountryCodes3.Filter(Countries, query);
-    }
-
     private Task PhoneCountryChangedAsync1(string? value)
     {
         ValueCountry1 = Countries.FirstOrDefault(item => item.Code == value);
-        
-        return Task.CompletedTask;
-    }
-
-    private Task PhoneCountryChangedAsync3(string? value)
-    {
-        ValueCountry3 = Countries.FirstOrDefault(item => item.Code == value);
         
         return Task.CompletedTask;
     }
