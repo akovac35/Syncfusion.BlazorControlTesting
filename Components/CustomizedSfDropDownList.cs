@@ -45,7 +45,10 @@ namespace Syncfusion.BlazorControlTesting.Components
             _valueChangedHash = HashCode.Combine(ValueChanged);
             _defaultValueChangedHash = _valueChangedHash;
 
-            FloatLabelType = Blazor.Inputs.FloatLabelType.Always;
+            FloatLabelType = Syncfusion.Blazor.Inputs.FloatLabelType.Always;
+            Width = "100%";
+            ShowClearButton = true;
+            AllowFiltering = true;
 
             base.OnInitialized();
         }
