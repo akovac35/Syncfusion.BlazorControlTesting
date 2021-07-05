@@ -1,0 +1,38 @@
+﻿@page "/gridvalidations"
+
+<h3>GridValidations</h3>
+
+<p>Try removing adding a row with missing entry to trigger validation error:</p>
+
+<SfGrid DataSource="@Data" AllowPaging="true" TValue="TestingDto" AllowTextWrap="true" AllowResizing="true" Width="100%" Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
+    <GridPageSettings PageSize="10" PageSizes="new int[] { 5, 10, 20}"></GridPageSettings>
+     <GridEditSettings AllowEditing="true" AllowDeleting="true" AllowAdding="true" Mode="@EditMode.Normal">
+         <Validator Context="validatorContext">
+            @{
+                ValidatorTemplateContext tmp = (ValidatorTemplateContext)validatorContext!;
+                TestingDto row = (TestingDto)tmp.Data!;
+            }
+            <CustomGridValidator TRow="TestingDto" Validator=@TestingDtoValidatorInstance Context=@tmp />
+        </Validator>
+     </GridEditSettings>
+     <GridTextWrapSettings WrapMode="WrapMode.Both"></GridTextWrapSettings>
+    <GridColumns>
+        <GridColumn Field=@nameof(TestingDto.Id) HeaderText="Id" IsPrimaryKey="true" IsIdentity="true" Visible="false" Width="100"></GridColumn>
+        <GridColumn Field=@($"{nameof(TestingDto.Summary)}.{nameof(Summary.SummaryText)}") HeaderText="Summary">
+            <EditTemplate Context="rowContext">
+                @{
+                    var tmp = (TestingDto)rowContext;
+                }
+                <CustomizedSfDropDownList3 TItem="Summary" TValue="int?"
+                    DataSource="@Summaries"
+                    Value="@(tmp.Summary?.Id)"
+                    ItemChanged="@(item => tmp.Summary = item)"
+                    FloatLabelType=@(Syncfusion.Blazor.Inputs.FloatLabelType.Never)
+                    NameOfValueProperty=@nameof(Summary.Id)
+                    NameOfTextProperty=@nameof(Summary.SummaryText)
+                    ShowClearButton="true" />
+                <ValidationMessage For="@(() => tmp.Summary)" />
+            </EditTemplate>
+        </GridColumn>
+    </GridColumns>
+</SfGrid>
