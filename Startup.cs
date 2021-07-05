@@ -48,7 +48,7 @@ namespace Syncfusion.BlazorControlTesting
             });
             services.TryAddSingleton<WeatherForecastContextFactory>();
             services.AddLoggingCorrelation();
-            services.AddSyncfusionBlazor();
+            services.AddSyncfusionBlazor(config => config.IgnoreScriptIsolation = true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
