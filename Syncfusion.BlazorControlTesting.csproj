@@ -8,21 +8,21 @@
 
   <ItemGroup>
     <PackageReference Include="DeepCloner" Version="0.10.2" />
-    <PackageReference Include="FluentValidation" Version="10.2.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.7" />
+    <PackageReference Include="FluentValidation" Version="10.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.7" />
-    <PackageReference Include="com.github.akovac35.Logging" Version="1.1.2" />
-    <PackageReference Include="com.github.akovac35.Logging.AspNetCore" Version="1.1.2" />
-    <PackageReference Include="com.github.akovac35.Logging.Serilog" Version="1.1.2" />
-    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.8" />
+    <PackageReference Include="com.github.akovac35.Logging" Version="1.2.0" />
+    <PackageReference Include="com.github.akovac35.Logging.AspNetCore" Version="1.2.0" />
+    <PackageReference Include="com.github.akovac35.Logging.Serilog" Version="1.2.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
     <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
-    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
-    <PackageReference Include="Syncfusion.Blazor" Version="19.2.0.44" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Syncfusion.Blazor" Version="19.2.0.47" />
   </ItemGroup>
 
   <ItemGroup>
