@@ -4,40 +4,41 @@
 <SampleContainerComponent Value="@ContainerComponentValue" ValueChanged="@ContainerComponentValueChanged" AllowEdit="true" />
 
 <br />
-
-<SfAccordion>
-    <AccordionItems>
-        <AccordionItem>
-            <HeaderTemplate>
-                <div>Test if control works inside accordion</div>
-            </HeaderTemplate>
-            <ContentTemplate>
-                <SampleContainerComponent Value="@ContainerComponentValue" ValueChanged="@ContainerComponentValueChanged" AllowEdit="true" />
-            </ContentTemplate>
-        </AccordionItem>
-        <AccordionItem>
-            <HeaderTemplate>
-                <div>Simple control which works</div>
-            </HeaderTemplate>
-            <ContentTemplate>
-                <SfTextBox Placeholder="Text box 1" @bind-Value="@TextBoxValue"></SfTextBox>
-            </ContentTemplate>
-        </AccordionItem>
-        <AccordionItem>
-            <HeaderTemplate>
-                <div>Simple control which works</div>
-            </HeaderTemplate>
-            <ContentTemplate>
-                <SfTextBox Placeholder="Text box 2" Value="@TextBoxValue" ValueChanged="TextBoxValueChanged"></SfTextBox>
-            </ContentTemplate>
-        </AccordionItem>
-        <AccordionItem>
-            <HeaderTemplate>
-                <div>Grid with dropdown list</div>
-            </HeaderTemplate>
-            <ContentTemplate>
-                <GridWithDropDownListComponent Value=@GridWithDropDownListComponentValue ValueChanged=@OnGridWithDropDownListComponentValueChangedAsync AllowEdit="true" />
-            </ContentTemplate>
-        </AccordionItem>
-    </AccordionItems>
-</SfAccordion>
+<CascadingValue Value=@TestCascadingValue>
+    <SfAccordion>
+        <AccordionItems>
+            <AccordionItem>
+                <HeaderTemplate>
+                    <div>Test if control works inside accordion</div>
+                </HeaderTemplate>
+                <ContentTemplate>
+                    <SampleContainerComponent Value="@ContainerComponentValue" ValueChanged="@ContainerComponentValueChanged" AllowEdit="true" />
+                </ContentTemplate>
+            </AccordionItem>
+            <AccordionItem>
+                <HeaderTemplate>
+                    <div>Simple control which works</div>
+                </HeaderTemplate>
+                <ContentTemplate>
+                    <SfTextBox Placeholder="Text box 1" @bind-Value="@TextBoxValue"></SfTextBox>
+                </ContentTemplate>
+            </AccordionItem>
+            <AccordionItem>
+                <HeaderTemplate>
+                    <div>Simple control which works</div>
+                </HeaderTemplate>
+                <ContentTemplate>
+                    <SfTextBox Placeholder="Text box 2" Value="@TextBoxValue" ValueChanged="TextBoxValueChanged"></SfTextBox>
+                </ContentTemplate>
+            </AccordionItem>
+            <AccordionItem>
+                <HeaderTemplate>
+                    <div>Grid with dropdown list</div>
+                </HeaderTemplate>
+                <ContentTemplate>
+                    <GridWithDropDownListComponent Value=@GridWithDropDownListComponentValue ValueChanged=@OnGridWithDropDownListComponentValueChangedAsync AllowEdit="true" />
+                </ContentTemplate>
+            </AccordionItem>
+        </AccordionItems>
+    </SfAccordion>
+</CascadingValue>

@@ -16,6 +16,8 @@ namespace Syncfusion.BlazorControlTesting.Pages.Accordion
         SampleContainerComponentModel ContainerComponentValue { get; set; } = new();
         string? TextBoxValue { get; set; } = null;
 
+        string TestCascadingValue { get; set; } = "This is a test";
+
         Task ContainerComponentValueChanged(SampleContainerComponentModel value)
         {
             ContainerComponentValue = value;
